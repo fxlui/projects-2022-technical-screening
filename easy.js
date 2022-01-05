@@ -1,8 +1,8 @@
-var assert = require("assert")
+var assert = require("assert");
 // Given an array of numbers, return a new array so that positive and negative
 // numbers alternate. You can assume that 0 is a positive number. Within the
-// positive and negative numbers, you must keep their relative order. You are 
-// guaranteed the number of positive and negative numbers will not differ by more 
+// positive and negative numbers, you must keep their relative order. You are
+// guaranteed the number of positive and negative numbers will not differ by more
 // than 1.
 
 // =====Example 1
@@ -31,62 +31,91 @@ var assert = require("assert")
 // Explanation: Empty array...
 
 const altNumbers = (numArray) => {
-    // TODO: COMPLETE THIS FUNCTION
-    return [];
-}
+  // get positive and negative numbers
+  const pos = numArray.filter((num) => num >= 0);
+  const neg = numArray.filter((num) => num < 0);
+  let result = [];
 
-module.exports = { altNumbers } // Do not modify this line
+  /** 
+    - if more negative numbers than positive numbers, start by
+    pushing negative numbers, then positive numbers, etc.
+    - vice versa if more pos than neg.
+    - if same amount of numbers then just push them in order
+  */
+  if (neg.length > pos.length) {
+    pos.forEach((num, i) => {
+      result.push(neg[i]);
+      result.push(num);
+    });
+    result.push(neg[neg.length - 1]);
+  } else if (pos.length > neg.length) {
+    neg.forEach((num, i) => {
+      result.push(pos[i]);
+      result.push(num);
+    });
+    result.push(pos[pos.length - 1]);
+  } else {
+    neg.forEach((num, i) => {
+      result.push(pos[i]);
+      result.push(num);
+    });
+  }
+
+  return result;
+};
+
+module.exports = { altNumbers }; // Do not modify this line
 
 // ====================TESTS====================
 // Some tests to help you check your progress. Simply run your code with
 // node easy.js
-// If successful, no output should appear. If unsuccessful, you should see 
+// If successful, no output should appear. If unsuccessful, you should see
 // assertion errors being thrown.
 
-let array1 = [1, -3, -8, -5, 10]
-array1 = altNumbers(array1)
-const answer1 = [-3, 1, -8, 10, -5]
+let array1 = [1, -3, -8, -5, 10];
+array1 = altNumbers(array1);
+const answer1 = [-3, 1, -8, 10, -5];
 for (let i = 0; i < array1.length; i++) {
-    assert(array1[i] === answer1[i])
+  assert(array1[i] === answer1[i]);
 }
 
-let array2 = [3, 0, 0, -5, -2]
-array2 = altNumbers(array2)
-const answer2 = [3, -5, 0, -2, 0]
+let array2 = [3, 0, 0, -5, -2];
+array2 = altNumbers(array2);
+const answer2 = [3, -5, 0, -2, 0];
 for (let i = 0; i < array2.length; i++) {
-    assert(array2[i] === answer2[i])
+  assert(array2[i] === answer2[i]);
 }
 
-let array3 = [0, -3, 3, -1, 1, -1]
-array3 = altNumbers(array3)
-const answer3a = [0, -3, 3, -1, 1, -1]
-const answer3b = [-3, 0, -1, 3, -1, 1]
+let array3 = [0, -3, 3, -1, 1, -1];
+array3 = altNumbers(array3);
+const answer3a = [0, -3, 3, -1, 1, -1];
+const answer3b = [-3, 0, -1, 3, -1, 1];
 if (array3[0] === 0) {
-    for (let i = 0; i < array3.length; i++) {
-        assert(array3[i] === answer3a[i])
-    }
+  for (let i = 0; i < array3.length; i++) {
+    assert(array3[i] === answer3a[i]);
+  }
 } else if (array3[0] == -3) {
-    for (let i = 0; i < array3.length; i++) {
-        assert(array3[i] === answer3b[i])
-    }
+  for (let i = 0; i < array3.length; i++) {
+    assert(array3[i] === answer3b[i]);
+  }
 } else {
-    assert(false)
+  assert(false);
 }
 
-let array4 = []
-array4 = altNumbers(array4)
-assert(array4.length === 0)
+let array4 = [];
+array4 = altNumbers(array4);
+assert(array4.length === 0);
 
-let array5 = [3,2,1,-1,-2,-3,-4]
-array5 = altNumbers(array5)
-const answer5 = [-1, 3, -2, 2, -3, 1, -4]
+let array5 = [3, 2, 1, -1, -2, -3, -4];
+array5 = altNumbers(array5);
+const answer5 = [-1, 3, -2, 2, -3, 1, -4];
 for (let i = 0; i < array5.length; i++) {
-    assert(array5[i] === answer5[i])
+  assert(array5[i] === answer5[i]);
 }
 
-let array6 = [5,-1,-2,-3,-4,0,3]
-array6 = altNumbers(array6)
-const answer6 = [-1, 5, -2, 0, -3, 3, -4]
+let array6 = [5, -1, -2, -3, -4, 0, 3];
+array6 = altNumbers(array6);
+const answer6 = [-1, 5, -2, 0, -3, 3, -4];
 for (let i = 0; i < array6.length; i++) {
-    assert(array6[i] === answer6[i])
+  assert(array6[i] === answer6[i]);
 }
